@@ -11,12 +11,12 @@ struct FavoritesNewsView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State private var news: [News] = []
+    @State private var items: [News] = []
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(news) { article in
+                ForEach(items) { article in
                     VStack {
                         TitleAndImageView(title: article.title ?? "", urlImage: article.urlImage ?? "")
                         
@@ -38,7 +38,7 @@ struct FavoritesNewsView: View {
     func loadData() {
         let request: NSFetchRequest<News> = News.fetchRequest()
         do {
-            news = try viewContext.fetch(request)
+            items = try viewContext.fetch(request)
         } catch let error {
             print("Error fetching items: \(error.localizedDescription)")
         }
@@ -46,7 +46,7 @@ struct FavoritesNewsView: View {
     
     func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { news[$0] }.forEach { item in
+            offsets.map { items[$0] }.forEach { item in
                 viewContext.delete(item)
             }
             
@@ -57,6 +57,12 @@ struct FavoritesNewsView: View {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
+        print("Удалена")
     }
 }
 
+struct FavoritesView_Previews: PreviewProvider {
+    static var previews: some View {
+        FavoritesNewsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    }
+}

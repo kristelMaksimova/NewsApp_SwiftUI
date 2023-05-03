@@ -13,6 +13,7 @@
 		201DAF892A02DEEE00611E01 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201DAF882A02DEEE00611E01 /* Preview Assets.xcassets */; };
 		201DAF8B2A02DEEE00611E01 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201DAF8A2A02DEEE00611E01 /* Persistence.swift */; };
 		201DAF8E2A02DEEE00611E01 /* NewsApp_SwiftUI.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 201DAF8C2A02DEEE00611E01 /* NewsApp_SwiftUI.xcdatamodeld */; };
+		201DC5132A02E93900C942E1 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 201DC5122A02E93900C942E1 /* News.swift */; };
 		207ECC972A02E37000FF9D1F /* TitleAndImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207ECC962A02E37000FF9D1F /* TitleAndImageView.swift */; };
 		207ECC992A02E39900FF9D1F /* DateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207ECC982A02E39900FF9D1F /* DateView.swift */; };
 		207ECC9B2A02E3D100FF9D1F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207ECC9A2A02E3D100FF9D1F /* DataManager.swift */; };
@@ -29,6 +30,7 @@
 		201DAF882A02DEEE00611E01 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		201DAF8A2A02DEEE00611E01 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		201DAF8D2A02DEEE00611E01 /* NewsApp_SwiftUI.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewsApp_SwiftUI.xcdatamodel; sourceTree = "<group>"; };
+		201DC5122A02E93900C942E1 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		207ECC962A02E37000FF9D1F /* TitleAndImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndImageView.swift; sourceTree = "<group>"; };
 		207ECC982A02E39900FF9D1F /* DateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateView.swift; sourceTree = "<group>"; };
 		207ECC9A2A02E3D100FF9D1F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -68,12 +70,9 @@
 			isa = PBXGroup;
 			children = (
 				201DAF812A02DEED00611E01 /* NewsApp_SwiftUIApp.swift */,
-				201DAF832A02DEED00611E01 /* ContentView.swift */,
-				207ECC9E2A02E43A00FF9D1F /* FavoritesNewsView.swift */,
-				207ECCA02A02E45C00FF9D1F /* NewsView.swift */,
-				207ECC9A2A02E3D100FF9D1F /* DataManager.swift */,
-				207ECC9C2A02E3EA00FF9D1F /* NetworkManager.swift */,
-				207ECC952A02E35900FF9D1F /* Subviews */,
+				201DC5112A02E8F200C942E1 /* Model */,
+				201DC50F2A02E8A100C942E1 /* Services */,
+				201DC5102A02E8B700C942E1 /* View */,
 				201DAF852A02DEEE00611E01 /* Assets.xcassets */,
 				201DAF8A2A02DEEE00611E01 /* Persistence.swift */,
 				201DAF8C2A02DEEE00611E01 /* NewsApp_SwiftUI.xcdatamodeld */,
@@ -88,6 +87,34 @@
 				201DAF882A02DEEE00611E01 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		201DC50F2A02E8A100C942E1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				207ECC9A2A02E3D100FF9D1F /* DataManager.swift */,
+				207ECC9C2A02E3EA00FF9D1F /* NetworkManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		201DC5102A02E8B700C942E1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				201DAF832A02DEED00611E01 /* ContentView.swift */,
+				207ECCA02A02E45C00FF9D1F /* NewsView.swift */,
+				207ECC9E2A02E43A00FF9D1F /* FavoritesNewsView.swift */,
+				207ECC952A02E35900FF9D1F /* Subviews */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		201DC5112A02E8F200C942E1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				201DC5122A02E93900C942E1 /* News.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		207ECC952A02E35900FF9D1F /* Subviews */ = {
@@ -175,6 +202,7 @@
 				207ECCA12A02E45C00FF9D1F /* NewsView.swift in Sources */,
 				207ECC9B2A02E3D100FF9D1F /* DataManager.swift in Sources */,
 				207ECC9F2A02E43A00FF9D1F /* FavoritesNewsView.swift in Sources */,
+				201DC5132A02E93900C942E1 /* News.swift in Sources */,
 				207ECC9D2A02E3EA00FF9D1F /* NetworkManager.swift in Sources */,
 				201DAF8B2A02DEEE00611E01 /* Persistence.swift in Sources */,
 				201DAF842A02DEED00611E01 /* ContentView.swift in Sources */,

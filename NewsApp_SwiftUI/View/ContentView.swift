@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     
+    let dataManager = DataManager(viewContext: PersistenceController.shared.container.viewContext)
+    
     var body: some View {
         TabView {
             
-            NewsView()
+            NewsView(dataManager: dataManager)
                 .tabItem {
                     Label("News", systemImage: "house")
                 }
