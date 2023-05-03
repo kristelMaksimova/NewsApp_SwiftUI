@@ -11,12 +11,18 @@ struct FavoritesNewsView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State private var items: [News] = []
+    @State private var news: [News] = []
+    
+    let dataManager: DataManager
+    
+    init(dataManager: DataManager) {
+        self.dataManager = dataManager
+    }
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { article in
+                ForEach(news) { article in
                     VStack {
                         TitleAndImageView(title: article.title ?? "", urlImage: article.urlImage ?? "")
                         
@@ -25,44 +31,23 @@ struct FavoritesNewsView: View {
                         }
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete(perform: deleteDataFromStorageByIndex)
                 .padding()
             }
-            .navigationTitle("Новости")
+            .navigationTitle("Избранные")
             .onAppear {
-                loadData()
+                dataManager.loadDataFromStorage() { news in
+                    self.news = news
+                }
             }
         }
     }
     
-    func loadData() {
-        let request: NSFetchRequest<News> = News.fetchRequest()
-        do {
-            items = try viewContext.fetch(request)
-        } catch let error {
-            print("Error fetching items: \(error.localizedDescription)")
-        }
-    }
-    
-    func deleteItems(offsets: IndexSet) {
+    func deleteDataFromStorageByIndex(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach { item in
-                viewContext.delete(item)
-            }
-            
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            offsets.map { news[$0] }.forEach { news in
+                dataManager.deleteData(news: news)
             }
         }
-        print("Удалена")
-    }
-}
-
-struct FavoritesView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoritesNewsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

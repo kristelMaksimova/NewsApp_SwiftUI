@@ -16,10 +16,10 @@ struct NewsView: View {
     @State private var articles: [Articles] = []
     
     let dataManager: DataManager
-        
-        init(dataManager: DataManager) {
-            self.dataManager = dataManager
-        }
+    
+    init(dataManager: DataManager) {
+        self.dataManager = dataManager
+    }
     
     var body: some View {
         NavigationView {
@@ -33,15 +33,11 @@ struct NewsView: View {
                         HStack {
                             DateView(date: article.publishedAt ?? "")
                             Spacer()
-                            Image(systemName: article.favorites ? "heart.fill" : "heart")
+                            Image(systemName:article.favorites ? "heart.fill" : "heart")
                                 .font(.system(size: 28))
                                 .padding(.trailing, 20)
                                 .gesture(TapGesture().onEnded {
-                                    if article.favorites {
-                                        dataManager.deleteItem(with: article.title ?? "")
-                                    } else {
-                                        dataManager.addItem(title: article.title ?? "", urlImage: article.urlToImage ?? "", date: article.publishedAt ?? "", favorites: article.favorites)
-                                    }
+                                    interactionDataManager(favorites: article.favorites, title: article.title ?? "", urlImage: article.urlToImage ?? "", date: article.publishedAt ?? "")
                                     articles[index].favorites.toggle()
                                 })
                         }
@@ -54,11 +50,21 @@ struct NewsView: View {
                 }
             }
             .onAppear {
-                dataManager.loadData(items: news) { articles in
+                dataManager.loadDataFromNetwork(items: news) { articles in
                     self.articles = articles
                 }
             }
             .navigationTitle("Новости")
+        }
+    }
+}
+
+extension NewsView {
+    private func interactionDataManager(favorites: Bool, title: String, urlImage: String, date: String) {
+        if favorites {
+            dataManager.deleteDataFromStorageByTitle(with: title)
+        } else {
+            dataManager.addDataToStorage(title: title, urlImage: urlImage, date: date, favorites: favorites)
         }
     }
 }
