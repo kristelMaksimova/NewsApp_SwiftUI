@@ -11,20 +11,22 @@ struct FavoritesNewsView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State private var news: [News] = []
-    
     let dataManager: DataManager
     
     init(dataManager: DataManager) {
         self.dataManager = dataManager
     }
     
+    @State private var news: [News] = []
+    
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(news) { article in
                     VStack {
-                        TitleAndImageView(title: article.title ?? "", urlImage: article.urlImage ?? "")
+                        TitleAndImageView(title: article.title ?? "",
+                                          urlImage: article.urlImage ?? "")
                         
                         HStack {
                             DateView(date: article.date ?? "")

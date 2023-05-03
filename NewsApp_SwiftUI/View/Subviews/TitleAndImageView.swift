@@ -20,12 +20,14 @@ struct TitleAndImageView: View {
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .frame(width: geometry.size.width,
+                                   height: geometry.size.height)
                             .clipped()
                     } placeholder: {
                         ProgressView()
                     }
-                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .frame(width: geometry.size.width,
+                           height: geometry.size.height)
                 }
                 .frame(height: 150)
             }

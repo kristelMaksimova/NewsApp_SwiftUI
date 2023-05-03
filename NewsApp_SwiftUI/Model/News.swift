@@ -21,6 +21,7 @@ struct Articles: Codable, Identifiable {
     var favorites = false
     
     enum CodingKeys: String, CodingKey {
+       
         case title
         case urlToImage
         case publishedAt

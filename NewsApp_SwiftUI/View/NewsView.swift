@@ -10,16 +10,19 @@ import CoreData
 
 struct NewsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \News.title, ascending: true)], animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \News.title, ascending: true)],
+                  animation: .default)
+   
     private var news: FetchedResults<News>
-    
-    @State private var articles: [Articles] = []
     
     let dataManager: DataManager
     
     init(dataManager: DataManager) {
         self.dataManager = dataManager
     }
+    
+    @State private var articles: [Articles] = []
+    
     
     var body: some View {
         NavigationView {
@@ -28,7 +31,8 @@ struct NewsView: View {
                     let article = articles[index]
                     VStack(alignment: .leading) {
                         
-                        TitleAndImageView(title: article.title ?? "", urlImage: article.urlToImage ?? "")
+                        TitleAndImageView(title: article.title ?? "",
+                                          urlImage: article.urlToImage ?? "")
                         
                         HStack {
                             DateView(date: article.publishedAt ?? "")
@@ -37,7 +41,10 @@ struct NewsView: View {
                                 .font(.system(size: 28))
                                 .padding(.trailing, 20)
                                 .gesture(TapGesture().onEnded {
-                                    interactionDataManager(favorites: article.favorites, title: article.title ?? "", urlImage: article.urlToImage ?? "", date: article.publishedAt ?? "")
+                                    interactionDataManager(favorites: article.favorites,
+                                                           title: article.title ?? "",
+                                                           urlImage: article.urlToImage ?? "",
+                                                           date: article.publishedAt ?? "")
                                     articles[index].favorites.toggle()
                                 })
                         }
