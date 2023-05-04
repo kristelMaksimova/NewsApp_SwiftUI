@@ -11,19 +11,16 @@ struct FavoritesNewsView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    let dataManager: DataManager
+    @ObservedObject private var viewModel: FavoritesNewsViewModel
     
-    init(dataManager: DataManager) {
-        self.dataManager = dataManager
+    init(viewModel: FavoritesNewsViewModel) {
+        self.viewModel = viewModel
     }
-    
-    @State private var news: [News] = []
-    
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(news) { article in
+                ForEach(viewModel.news) { article in
                     VStack {
                         TitleAndImageView(title: article.title ?? "",
                                           urlImage: article.urlImage ?? "")
@@ -33,22 +30,12 @@ struct FavoritesNewsView: View {
                         }
                     }
                 }
-                .onDelete(perform: deleteDataFromStorageByIndex)
+                .onDelete(perform: viewModel.deleteDataFromStorageByIndex)
                 .padding()
             }
             .navigationTitle("Избранные")
             .onAppear {
-                dataManager.loadDataFromStorage() { news in
-                    self.news = news
-                }
-            }
-        }
-    }
-    
-    func deleteDataFromStorageByIndex(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { news[$0] }.forEach { news in
-                dataManager.deleteData(news: news)
+                viewModel.loadData()
             }
         }
     }

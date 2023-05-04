@@ -12,23 +12,20 @@ struct NewsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \News.title, ascending: true)],
                   animation: .default)
-   
+    
     private var news: FetchedResults<News>
     
-    let dataManager: DataManager
+    @ObservedObject var viewModel: NewsViewModel
     
     init(dataManager: DataManager) {
-        self.dataManager = dataManager
+        self.viewModel = NewsViewModel(dataManager: dataManager)
     }
-    
-    @State private var articles: [Articles] = []
-    
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(articles.indices, id: \.self) { index in
-                    let article = articles[index]
+                ForEach(viewModel.articles.indices, id: \.self) { index in
+                    let article = viewModel.articles[index]
                     VStack(alignment: .leading) {
                         
                         TitleAndImageView(title: article.title ?? "",
@@ -41,37 +38,23 @@ struct NewsView: View {
                                 .font(.system(size: 28))
                                 .padding(.trailing, 20)
                                 .gesture(TapGesture().onEnded {
-                                    interactionDataManager(favorites: article.favorites,
-                                                           title: article.title ?? "",
-                                                           urlImage: article.urlToImage ?? "",
-                                                           date: article.publishedAt ?? "")
-                                    articles[index].favorites.toggle()
+                                    viewModel.interactionDataManager(favorites: article.favorites,
+                                                                     title: article.title ?? "",
+                                                                     urlImage: article.urlToImage ?? "",
+                                                                     date: article.publishedAt ?? "")
+                                    viewModel.articles[index].favorites.toggle()
                                 })
                         }
                     }
                     .padding()
                     .contentShape(Rectangle())
-                    .onTapGesture {
-                    }
                     .background(Color.white)
                 }
             }
             .onAppear {
-                dataManager.loadDataFromNetwork(items: news) { articles in
-                    self.articles = articles
-                }
+                viewModel.loadDataFromNetwork(items: news)
             }
             .navigationTitle("Новости")
-        }
-    }
-}
-
-extension NewsView {
-    private func interactionDataManager(favorites: Bool, title: String, urlImage: String, date: String) {
-        if favorites {
-            dataManager.deleteDataFromStorageByTitle(with: title)
-        } else {
-            dataManager.addDataToStorage(title: title, urlImage: urlImage, date: date, favorites: favorites)
         }
     }
 }

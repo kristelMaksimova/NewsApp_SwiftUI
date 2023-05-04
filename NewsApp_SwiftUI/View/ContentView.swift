@@ -18,7 +18,7 @@ struct ContentView: View {
                 .tabItem {
                     Label("News", systemImage: "house")
                 }
-            FavoritesNewsView(dataManager: dataManager)
+            FavoritesNewsView(viewModel: FavoritesNewsViewModel.init(dataManager: dataManager))
                 .tabItem {
                     Label("Favorites", systemImage: "heart")
                 }
